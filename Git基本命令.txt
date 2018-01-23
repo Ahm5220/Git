@@ -1,0 +1,55 @@
+Git基本命令：
+	1.git init (path)			初始化当前目录为本地仓库，可以直接切换至目录，也可直接输入目录路径
+	2.git status				查看当前仓库状态
+	3.git diff (file)			查看指定file改变的内容
+	4.git add (file)			将指定的file添加到暂存区中，此时file还未提交，可以多次add
+	5.git commit -m "(注释)"		提交暂存区中的file
+	6.git log				查看提交日志(包含commit id，用户，时间，提交注释)
+	7.git log --pretty=oneline		仅一行显示提交日志(只显示commit id和提交注释)
+	8.git reflog				查看所有的提交日志
+	9.git reset --hard HEAD^		回退上一版本
+	10.git rm (file)			删除指定的file，还需提交
+	11.git remote add origin git@github.com:Ahm5220/Repository.git		将本地仓库同步到GitHub远程仓库
+	12.git push -u origin master		将本地仓库中的所有内容推送至远程仓库(远程仓库第一次建立为空时)
+	13.git push origin master		将本地仓库中的所有内容推送至远程仓库
+	14.git clone git@github.com:Ahm5220/Test.git				克隆远程仓库的所有内容到本地仓库
+	15.git branch (name)			新建一个分支
+	16.git branch				查看所有分支
+	17.git checkout (name)			切换至指定的分支
+	18.git checkout -b (name)		新建一个分支并切换至该分支
+	19.git merge (name)			将当前的分支与指定的分支进行合并，合并后会丢失合并分支的信息
+	20.git merge --no-ff -m "注释" (name)	将当前的分支与指定的分支进行合并，并commit且带有分支合并记录
+	21.git branch -d (name)			删除指定分支
+	22.git branch -D (name)			强制删除指定分支(用于未合并的分支)
+	23.git log --graph --pretty=oneline --abbrev-commit			查看分支合并记录图
+	24.git stash				将当前的工作内容临时存储(当前的工作不能commit，但又必须做别的)
+	25.git stash apply			将之前临时存储的工作提取出来(临时存储中仍有该工作内容)
+	26.git stash pop			将之前临时存储的工作提取出来，并删除临时存储中的工作内容
+	27.git stash drop			删除临时存储中的工作内容
+	28.git stash list			查看临时存储中的工作内容
+	29.git tag (name) (commit id)		在当前的HEAD上(默认)打标签，也可以使用commit id
+	30.git tag -a (name) -m "注释" (commit id)			在当前或者指定commit id打上带有注释的标签
+	31.git tag				查看所有标签
+	32.git show (name)			查看指定标签的详细信息
+	33.git tag -d (name)			删除标签
+	34.git push origin (name)		将指定的标签推送至远程仓库
+	35.git push --tags			将全部未推送的标签推送至远程仓库
+	36.git push origin :refs/tags/(name)	先将本地标签删除，再将本地删除的标签从远程仓库删除
+
+注意：
+	1.先使用add命令添加至暂存区，在使用commit命令提交，一定要写提交注释
+	2.git log只能查看当前版本到第一个版本，即如果回退版本，回退之前的版本都无法查看
+	3.git reflog可以查看所有的提交日志，即使有回退也可以查询到
+	4.HEAD表示当前版本，^表示上一个版本，^^表示上两个版本以此类推。上100个版本
+		可以写做HEAD~100
+	5.git reset可以指定版本号进行回退(当然也可以回到新版本，使用reflog查看所有的
+		日志，查找到新的commit id即可)，如git reset --hard 26fb9f4(版本号不一定全
+		部记录，10位以内即可)
+	6.修改过的文件还未添加至暂存区可以使用git checkout -- (file)撤销修改。已经
+		git add添加进暂存区的可以使用git reset HEAD (file)撤销添加暂存区的
+		操作，再使用git checkout -- (file)撤销文件的修改
+	7.git rm删除的文件在暂存区，可以使用git checkout -- (file)撤销删除。如果已经git commit
+		可以使用版本回退找回
+	8.新建立的远程库是空的，第一次推送master分支，加上-u，会把本地的master分支和远程
+		的master分支关联起来，在以后的推送或者拉取时可以简化命令。
+	9.分支的创建，切换，合并非常快。可以使用多个分支完成任务再进行分支合并，可以提高安全性
